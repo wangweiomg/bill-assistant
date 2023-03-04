@@ -75,7 +75,7 @@
             #{wxUnionId},
             #{avatarUrl},
             #{gender},
-            #{contury},
+            #{country},
             #{province},
             #{city},
             #{language},
