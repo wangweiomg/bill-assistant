@@ -27,4 +27,29 @@ CREATE TABLE `t_card` (
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `delete_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='信用卡卡片信息'
+) ENGINE=InnoDB  COMMENT='信用卡卡片信息';
+
+CREATE TABLE `t_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(50) DEFAULT '',
+  `email` varchar(50) DEFAULT '',
+  `mobile` varchar(15) DEFAULT '',
+  `wx_app_id` varchar(50) DEFAULT '',
+  `wx_open_id` varchar(50) NOT NULL,
+  `wx_union_id` varchar(50) DEFAULT '',
+  `avatar_url` varchar(100) DEFAULT '',
+  `gender` varchar(10) DEFAULT '',
+  `country` varchar(20) DEFAULT '',
+  `province` varchar(20) DEFAULT '',
+  `city` varchar(20) DEFAULT '',
+  `language` varchar(10) DEFAULT '',
+  `status` tinyint(1) DEFAULT '1',
+  `remark` varchar(30) DEFAULT '',
+  `created_by` int(11) DEFAULT '1',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) DEFAULT '1',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `delete_flag` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_t_card_open_id` (`wx_open_id`) USING BTREE
+) ENGINE=InnoDB COMMENT='微信用户信息表';

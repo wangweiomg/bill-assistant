@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.UserMapper">
+
+    <resultMap id="userMapper" type="com.tencent.wxcloudrun.model.User">
+        <id property="id" column="id"/>
+        <result property="nickname" column="nickname" javaType="java.lang.String"/>
+        <result property="email" column="email" javaType="java.lang.String"/>
+        <result property="mobile" column="mobile" javaType="java.lang.String"/>
+        <result property="wxAppId" column="wx_app_id" javaType="java.lang.String"/>
+        <result property="wxOpenId" column="wx_open_id" javaType="java.lang.String"/>
+        <result property="wxUnionId" column="wx_union_id" javaType="java.lang.String"/>
+        <result property="avatarUrl" column="avatar_url" javaType="java.lang.String"/>
+        <result property="gender" column="gender" javaType="java.lang.String"/>
+        <result property="country" column="country" javaType="java.lang.String"/>
+        <result property="province" column="province" javaType="java.lang.String"/>
+        <result property="city" column="city" javaType="java.lang.String"/>
+        <result property="language" column="language" javaType="java.lang.String"/>
+        <result property="status" column="status" javaType="java.lang.Integer"/>
+        <result property="remark" column="remark" javaType="java.lang.String"/>
+        <result property="createdBy" column="created_by" javaType="java.lang.Integer"/>
+        <result property="createdAt" column="created_at" javaType="java.time.LocalDateTime" />
+        <result property="updatedBy" column="updated_by" javaType="java.lang.Integer"  />
+        <result property="updatedAt" column="updated_at" javaType="java.time.LocalDateTime"  />
+        <result property="deleteFlag" column="delete_flag" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <sql id="userColumns">
+        id,
+        nickname,
+        email,
+        mobile,
+        wx_app_id,
+        wx_open_id,
+        wx_union_id,
+        avatar_url,
+        gender,
+        country,
+        province,
+        city,
+        language,
+        status,
+        remark,
+        created_by,
+        created_at,
+        updated_by,
+        updated_at,
+        delete_flag
+    </sql>
+
+
+    <update id="upsert" parameterType="com.tencent.wxcloudrun.model.User">
+        INSERT INTO `t_user`(
+            nickname,
+            email,
+            mobile,
+            wx_app_id,
+            wx_open_id,
+            wx_union_id,
+            avatar_url,
+            gender,
+            country,
+            province,
+            city,
+            language,
+            remark,
+            created_by
+        )
+        VALUES(
+            #{nickname},
+            #{email},
+            #{mobile},
+            #{wxAppId},
+            #{wxOpenId},
+            #{wxUnionId},
+            #{avatarUrl},
+            #{gender},
+            #{contury},
+            #{province},
+            #{city},
+            #{language},
+            #{remark},
+            #{createdBy}
+        )
+        ON DUPLICATE KEY UPDATE
+            updated_at = NOW()
+            <if test="updatedBy != null">
+                ,updatedBy =#{updatedBy}
+            </if>
+            <if test="nickname != null and nickname !=''">
+                ,nickname = #{nickname}
+
+            </if>
+            <if test="email != null and email !=''">
+                ,email = #{email}
+            </if>
+            <if test="mobile != null and mobile!=''">
+                ,mobile = #{mobile}
+            </if>
+            <if test="wxUnionId != null and wxUnionId!=''">
+                ,wx_union_id = #{wxUnionId}
+            </if>
+            <if test="avatarUrl != null and avatarUrl!=''">
+                ,avatar_url = #{avatarUrl}
+            </if>
+            <if test="gender != null and gender!=''">
+                ,gender = #{gender}
+            </if>
+
+    </update>
+
+</mapper>
