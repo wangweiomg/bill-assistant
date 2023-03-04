@@ -48,7 +48,6 @@
         delete_flag
     </sql>
 
-
     <update id="upsert" parameterType="com.tencent.wxcloudrun.model.User">
         INSERT INTO `t_user`(
             nickname,
@@ -105,6 +104,18 @@
             </if>
             <if test="gender != null and gender!=''">
                 ,gender = #{gender}
+            </if>
+            <if test="country != null and country !=''">
+                ,country = #{country}
+            </if>
+            <if test="province != null and province !=''">
+                ,province = #{province}
+            </if>
+            <if test="city != null and city !=''">
+                ,city = #{city}
+            </if>
+            <if test="language !=null and language !=''">
+                ,language = #{language}
             </if>
 
     </update>
