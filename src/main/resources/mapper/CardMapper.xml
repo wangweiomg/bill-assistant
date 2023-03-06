@@ -84,7 +84,7 @@
             #{name},
             #{cardNo},
             #{password},
-            #{bandId},
+            #{bankId},
             #{cardLimit},
             #{billDay},
             #{repayDayType},
