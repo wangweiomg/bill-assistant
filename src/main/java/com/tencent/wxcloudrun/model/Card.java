@@ -68,5 +68,27 @@ public class Card implements Serializable {
 
     private Integer deleteFlag;
 
+    public enum StatusEnum {
+
+        /**
+         * 启用中
+         */
+        ON(1),
+
+        /**
+         * 停用
+         */
+        OFF(2);
+
+        private final Integer value;
+        StatusEnum(Integer value){
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return this.value;
+        }
+    }
+
     
 }

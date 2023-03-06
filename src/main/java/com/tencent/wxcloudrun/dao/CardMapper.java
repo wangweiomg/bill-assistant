@@ -13,4 +13,8 @@ public interface CardMapper {
     Card getById(@Param("id") Integer id);
 
     List<Card> listByUserId(@Param("userId") Integer userId);
+
+    void save(Card card);
+
+    void update(Card card);
 }

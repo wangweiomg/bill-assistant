@@ -48,6 +48,20 @@
         delete_flag
     </sql>
 
+    <select id="getByOpenId" resultMap="userMapper">
+        SELECT
+        <include refid="userColumns"></include>
+        FROM t_user
+        WHERE open_id = #{openId}
+    </select>
+
+    <select id="getById" resultMap="userMapper">
+        SELECT
+        <include refid="userColumns"></include>
+        FROM t_user
+        WHERE id = #{id}
+    </select>
+
     <update id="upsert" parameterType="com.tencent.wxcloudrun.model.User">
         INSERT INTO `t_user`(
             nickname,

@@ -29,4 +29,16 @@ public class CardServiceImpl implements CardService{
     public List<Card> listByUserId(Integer userId) {
         return cardMapper.listByUserId(userId);
     }
+
+    @Override
+    public void save(Card card) {
+
+        cardMapper.save(card);
+    }
+
+    @Override
+    public void update(Card card) {
+        cardMapper.update(card);
+    }
+
 }

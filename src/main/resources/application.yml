@@ -12,6 +12,13 @@ spring:
     view:
       suffix: .html
       prefix: /
-
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
+logging:
+  group:
+    server: com.tencent.wxcloudrun.controller, com.tencent.wxcloudrun.service
+    sql: com.tencent.wxcloudrun.dao
+  level:
+    root: info
+    server: debug
+    sql: trace

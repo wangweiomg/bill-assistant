@@ -11,5 +11,8 @@ public interface CardService {
 
     List<Card> listByUserId(Integer userId);
 
-    
+
+    void save(Card card);
+
+    void update(Card card);
 }

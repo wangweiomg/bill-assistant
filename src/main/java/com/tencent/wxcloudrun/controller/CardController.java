@@ -4,10 +4,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.tencent.wxcloudrun.dto.CardRequest;
+import com.tencent.wxcloudrun.model.User;
+import com.tencent.wxcloudrun.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -18,11 +23,13 @@ import com.tencent.wxcloudrun.service.CardService;
 public class CardController {
 
     final CardService cardService;
+    final UserService userService;
     final Logger logger;
 
-    public CardController(@Autowired CardService cardService) {
+    public CardController(@Autowired CardService cardService, @Autowired UserService userService) {
 
         this.cardService = cardService;
+        this.userService = userService;
         this.logger = LoggerFactory.getLogger(CardController.class);
     }
     
@@ -48,6 +55,40 @@ public class CardController {
         List<Card> list = cardService.listByUserId(1);
         return ApiResponse.ok(list);
 
+    }
+
+    @PostMapping("/api/card/upsert")
+    ApiResponse upsert(@RequestBody CardRequest request) {
+        logger.info("/api/card/upsert get request");
+        logger.debug("/api/card/upsert get request, param-->{}", request);
+
+        Card card = new Card();
+        card.setName(request.getName());
+        card.setRemark(request.getRemark());
+        card.setCardLimit(request.getCardLimit());
+        card.setBillDay(request.getBillDay());
+        card.setRepayDayType(request.getRepayDayType());
+        card.setRepayDayNum(request.getRepayDayNum());
+
+        // card 设置默认值
+        // openId 换userId
+        Optional<User> user = userService.getByOpenId(request.getOpenId());
+
+        if (!user.isPresent()) {
+            logger.error("<--invalid openId! user not exists--> openId-->{}", request.getOpenId());
+            return ApiResponse.error("invalid open_id !");
+        }
+
+        card.setCreatedBy(user.get().getId());
+
+        if (request.getCardId() != null) {
+            card.setId(request.getCardId());
+            cardService.update(card);
+        } else {
+            cardService.save(card);
+        }
+
+        return ApiResponse.ok();
     }
 
 }

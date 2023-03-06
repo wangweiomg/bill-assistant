@@ -65,10 +65,87 @@
         limit 1
     </delete>
 
-    <update id="upsertCard" parameterType="com.tencent.wxcloudrun.model.Card">
-        INSERT INTO `t_card`(`id`, `user_id`)
-        VALUE(#{id}, #{count}) 
-        ON DUPLICATE KEY UPDATE count=#{count}
+    <insert id="save" parameterType="com.tencent.wxcloudrun.model.Card">
+        INSERT INTO t_card (
+            user_id,
+            name,
+            card_no,
+            password,
+            bank_id,
+            card_limit,
+            bill_day,
+            repay_day_type,
+            repay_day_num,
+            remark,
+            created_by
+            )
+        VALUES (
+            #{userId},
+            #{name},
+            #{cardNo},
+            #{password},
+            #{bandId},
+            #{cardLimit},
+            #{billDay},
+            #{repayDayType},
+            #{repayDayNum},
+            #{remark},
+            #{createdBy}
+            )
+    </insert>
+
+    <update id="update" parameterType="com.tencent.wxcloudrun.model.Card">
+        UPDATE `t_card`
+        <set>
+            <if test="name != null and name !=''">
+                name = #{name}
+            </if>
+            <if test="cardNo != null and cardNo != ''">
+                card_no = #{cardNo}
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password}
+            </if>
+
+            <if test="bankdId != null and bankId !=''">
+                bank_id = #{bankId}
+            </if>
+
+            <if test="cardType != null">
+                card_type = #{cardType}
+            </if>
+
+            <if test="cardLimit != null">
+                card_limit = #{cardLimit}
+            </if>
+
+            <if test="billDay != null">
+                bill_day = #{billDay}
+            </if>
+
+            <if test="repayDayType != null">
+                repay_day_type = #{repayDayType}
+            </if>
+
+            <if test="repayDayNum != null">
+                repay_day_num = #{repayDayNum}
+            </if>
+
+            <if test="status != null">
+                status = #{status}
+            </if>
+
+            <if test="remark != null and remark != ''">
+                remark = #{remark}
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy}
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag}
+            </if>
+        </set>
+        WHERE id = #{id}
     </update>
 
 </mapper>

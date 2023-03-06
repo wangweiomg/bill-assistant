@@ -6,6 +6,8 @@ import com.tencent.wxcloudrun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -21,5 +23,15 @@ public class UserServiceImpl implements UserService {
 
         userMapper.upsert(user);
 
+    }
+
+    @Override
+    public Optional<User> getByOpenId(String openId) {
+        return Optional.ofNullable(userMapper.getByOpenId(openId));
+    }
+
+    @Override
+    public Optional<User> getById(Integer id) {
+        return Optional.ofNullable(userMapper.getById(id));
     }
 }
