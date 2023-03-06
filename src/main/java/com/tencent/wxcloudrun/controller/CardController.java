@@ -4,16 +4,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.tencent.wxcloudrun.constants.WxRequestHeaderNamesConstant;
 import com.tencent.wxcloudrun.dto.CardRequest;
 import com.tencent.wxcloudrun.model.User;
 import com.tencent.wxcloudrun.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.model.Card;
@@ -58,9 +57,11 @@ public class CardController {
     }
 
     @PostMapping("/api/card/upsert")
-    ApiResponse upsert(@RequestBody CardRequest request) {
+    ApiResponse upsert(@RequestBody CardRequest request, @RequestHeader HttpHeaders headers) {
         logger.info("/api/card/upsert get request");
-        logger.debug("/api/card/upsert get request, param-->{}", request);
+        logger.debug("/api/card/upsert get request, param-->{}, headers-->{}", request, headers);
+
+        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
 
         Card card = new Card();
         card.setName(request.getName());
@@ -72,10 +73,10 @@ public class CardController {
 
         // card 设置默认值
         // openId 换userId
-        Optional<User> user = userService.getByOpenId(request.getOpenId());
+        Optional<User> user = userService.getByOpenId(openId);
 
         if (!user.isPresent()) {
-            logger.error("<--invalid openId! user not exists--> openId-->{}", request.getOpenId());
+            logger.error("<--invalid openId! user not exists--> openId-->{}", openId);
             return ApiResponse.error("invalid open_id !");
         }
 
