@@ -80,6 +80,7 @@ public class CardController {
             return ApiResponse.error("invalid open_id !");
         }
 
+        card.setUserId(user.get().getId());
         card.setCreatedBy(user.get().getId());
 
         if (request.getCardId() != null) {
