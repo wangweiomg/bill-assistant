@@ -49,9 +49,21 @@ public class CardController {
     }
 
     @GetMapping("/api/card/list")
-    ApiResponse list() {
+    ApiResponse list(@RequestHeader HttpHeaders headers) {
         logger.info("/api/card/list get request");
-        List<Card> list = cardService.listByUserId(1);
+
+        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
+
+        logger.debug("<--/api/card/list get request, open_id-->{}", openId);
+
+        Optional<User> user = userService.getByOpenId(openId);
+
+        if (!user.isPresent()) {
+            logger.error("<--invalid openId! user not exists--> openId-->{}", openId);
+            return ApiResponse.error("invalid open_id !");
+        }
+
+        List<Card> list = cardService.listByUserId(user.get().getId());
         return ApiResponse.ok(list);
 
     }
