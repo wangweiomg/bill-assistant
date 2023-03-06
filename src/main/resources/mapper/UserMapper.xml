@@ -52,7 +52,7 @@
         SELECT
         <include refid="userColumns"></include>
         FROM t_user
-        WHERE open_id = #{openId}
+        WHERE wx_open_id = #{openId}
     </select>
 
     <select id="getById" resultMap="userMapper">

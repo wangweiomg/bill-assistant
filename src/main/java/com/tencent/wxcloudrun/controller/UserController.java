@@ -29,9 +29,9 @@ public class UserController {
     @PostMapping(value = "/api/user/upsert")
     ApiResponse upsert(@RequestHeader HttpHeaders headers) {
 
-        logger.info("/api/user/upsert get request");
+        logger.info("/api/user/upsert post request");
 
-        logger.debug("/api/user/upsert get request headers-->{}", headers);
+        logger.debug("/api/user/upsert post request headers-->{}", headers);
 
         WxRequestHeader header = WxHeaderUtil.covertToWxRequest(headers);
 

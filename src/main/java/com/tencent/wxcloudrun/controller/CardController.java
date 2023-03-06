@@ -58,8 +58,8 @@ public class CardController {
 
     @PostMapping("/api/card/upsert")
     ApiResponse upsert(@RequestBody CardRequest request, @RequestHeader HttpHeaders headers) {
-        logger.info("/api/card/upsert get request");
-        logger.debug("/api/card/upsert get request, param-->{}, headers-->{}", request, headers);
+        logger.info("/api/card/upsert post request");
+        logger.debug("/api/card/upsert post request, param-->{}, headers-->{}", request, headers);
 
         String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
 
