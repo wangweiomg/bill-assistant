@@ -15,7 +15,7 @@ public class WxPhoneNumberResponse implements Serializable {
     private String errmsg;
     private PhoneInfo phone_info;
 
-    @Data class PhoneInfo implements Serializable {
+    public @Data class PhoneInfo implements Serializable {
         private String phoneNumber;
         private String purePhoneNumber;
         private String countryCode;
