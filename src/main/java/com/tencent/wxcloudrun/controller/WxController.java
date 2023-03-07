@@ -31,10 +31,10 @@ public class WxController {
     @GetMapping(value ="/api/wx/getuserphonenumber/{code}")
     ApiResponse getMobile(@PathVariable String code) {
 
+        log.info("<--/api/wx/getuserphonenumber  get request! -->");
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
-
 
         Map<String, Object> body = new HashMap<>(1);
         body.put("code", code);
@@ -42,9 +42,7 @@ public class WxController {
         HttpEntity<WxPhoneNumberResponse> res = restTemplate.postForEntity(WxOpenUrlConstant.GET_PHONE_NUMBER_URL, entity, WxPhoneNumberResponse.class);
 
 
-        log.debug("res.body-->{}", res.getBody());
-
-
+        log.debug("getphonenumber res.body-->{}", res.getBody());
 
         return ApiResponse.ok(res.getBody().getPhone_info());
 
