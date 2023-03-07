@@ -16,7 +16,7 @@ public class RestTemplateConfig {
     @Bean
     public RestTemplate build(RestTemplateBuilder restTemplateBuilder) {
         RestTemplate restTemplate = restTemplateBuilder.build();
-        restTemplateBuilder.additionalMessageConverters(new WxMappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new WxMappingJackson2HttpMessageConverter());
         return restTemplate;
     }
 
