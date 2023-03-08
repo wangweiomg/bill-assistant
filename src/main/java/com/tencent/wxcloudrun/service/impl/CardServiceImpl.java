@@ -41,4 +41,11 @@ public class CardServiceImpl implements CardService{
         cardMapper.update(card);
     }
 
+    @Override
+    public void remove(Integer id) {
+
+        cardMapper.remove(id);
+
+    }
+
 }

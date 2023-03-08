@@ -15,4 +15,6 @@ public interface CardService {
     void save(Card card);
 
     void update(Card card);
+
+    void remove(Integer id);
 }

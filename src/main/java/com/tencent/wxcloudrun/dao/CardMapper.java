@@ -17,4 +17,6 @@ public interface CardMapper {
     void save(Card card);
 
     void update(Card card);
+
+    void remove(@Param("id") Integer id);
 }

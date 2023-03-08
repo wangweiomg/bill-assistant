@@ -1,6 +1,5 @@
 package com.tencent.wxcloudrun.controller;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,6 +102,20 @@ public class CardController {
         }
 
         return ApiResponse.ok();
+    }
+
+    @PostMapping(value = "/api/card/remove/{id}")
+    ApiResponse delete(@PathVariable Integer id, @RequestHeader HttpHeaders headers) {
+        logger.info("<-- /api/card/remove post request-->");
+
+        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
+
+        Optional<User> user = userService.getByOpenId(openId);
+
+        user.ifPresent(value -> cardService.remove(id));
+
+        return ApiResponse.ok();
+
     }
 
 }

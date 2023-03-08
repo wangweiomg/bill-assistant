@@ -56,15 +56,9 @@
         <include refid="cardColumns"></include>
         FROM t_card
         WHERE user_id = #{userId}
+        AND delete_flag = 0
         ORDER BY bill_day ASC
     </select>
-
-    <delete id="clearCard" parameterType="java.lang.Integer">
-        DELETE
-        FROM t_card
-        where id = #{id}
-        limit 1
-    </delete>
 
     <insert id="save" parameterType="com.tencent.wxcloudrun.model.Card">
         INSERT INTO t_card (
@@ -146,6 +140,12 @@
                 delete_flag = #{deleteFlag}
             </if>
         </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="remove">
+        UPDATE t_card
+        SET delete_flag = 1
         WHERE id = #{id}
     </update>
 
