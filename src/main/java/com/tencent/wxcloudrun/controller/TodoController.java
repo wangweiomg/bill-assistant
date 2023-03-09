@@ -58,30 +58,33 @@ public class TodoController {
             LocalDate now = LocalDate.now();
             boolean isBilled = now.getDayOfMonth() > i.getBillDay();
 
-            LocalDate start = now;
-            LocalDate end = now;
+            LocalDate billDate = now;
+            LocalDate repayDate = now;
             if (isBilled) {
-                start = now.withDayOfMonth(i.getBillDay());
+                billDate = now.withDayOfMonth(i.getBillDay());
 
                 if (i.getRepayDayType() == 1) {
-                    end = i.getRepayDayNum() > i.getBillDay() ? now.withDayOfMonth(i.getRepayDayNum()) : now.withDayOfMonth(i.getRepayDayNum()).plusMonths(1);
+                    repayDate = i.getRepayDayNum() > i.getBillDay() ? now.withDayOfMonth(i.getRepayDayNum()) : now.withDayOfMonth(i.getRepayDayNum()).plusMonths(1);
                 } else {
-                    end = start.plusDays(i.getRepayDayNum());
+                    repayDate = billDate.plusDays(i.getRepayDayNum());
                 }
 
             } else {
 
-                start = now.withDayOfMonth(i.getBillDay()).plusMonths(-1);
+                billDate = now.withDayOfMonth(i.getBillDay()).plusMonths(-1);
 
                 if (i.getRepayDayType() == 1) {
 
+                    repayDate = now.withDayOfMonth(i.getRepayDayNum()).plusMonths(-1).isBefore(billDate) ? now.withDayOfMonth(i.getRepayDayNum()) : now.withDayOfMonth(i.getRepayDayNum()).plusMonths(-1);
+
                 } else {
 
+                    repayDate = billDate.plusDays(i.getRepayDayNum());
                 }
             }
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            todo.setPeriod(formatter.format(start) + " - " + formatter.format(end));
+            todo.setPeriod(formatter.format(billDate) + " - " + formatter.format(repayDate));
 
             todo.setStatus(0);
 
