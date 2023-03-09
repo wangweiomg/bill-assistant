@@ -53,6 +53,7 @@ public class TodoController {
 
         List<Todo> cardTodos = cards.stream().map(i -> {
             val todo = new Todo();
+            todo.setType(1);
             todo.setName(i.getName());
 
             LocalDate now = LocalDate.now();
