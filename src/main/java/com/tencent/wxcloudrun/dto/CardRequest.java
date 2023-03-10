@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 @Data
 public class CardRequest implements Serializable {
 
+    private Integer userId;
+
     private Integer cardId;
 
     /**

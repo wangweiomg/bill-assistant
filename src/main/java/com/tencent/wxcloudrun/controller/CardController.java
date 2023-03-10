@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -58,11 +57,10 @@ public class CardController {
     }
 
     @PostMapping("/api/card/upsert")
-    ApiResponse upsert(@RequestBody CardRequest request, @RequestHeader HttpHeaders headers) {
+    ApiResponse upsert(@RequestBody CardRequest request) {
         logger.info("/api/card/upsert post request");
-        logger.debug("/api/card/upsert post request, param-->{}, headers-->{}", request, headers);
+        logger.debug("/api/card/upsert post request, param-->{}", request);
 
-        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
 
         Card card = new Card();
         card.setName(request.getName());
@@ -72,17 +70,8 @@ public class CardController {
         card.setRepayDayType(request.getRepayDayType());
         card.setRepayDayNum(request.getRepayDayNum());
 
-        // card 设置默认值
-        // openId 换userId
-        Optional<User> user = userService.getByOpenId(openId);
-
-        if (!user.isPresent()) {
-            logger.error("<--invalid openId! user not exists--> openId-->{}", openId);
-            return ApiResponse.error("invalid open_id !");
-        }
-
-        card.setUserId(user.get().getId());
-        card.setCreatedBy(user.get().getId());
+        card.setUserId(request.getUserId());
+        card.setCreatedBy(request.getUserId());
 
         if (request.getCardId() != null) {
             card.setId(request.getCardId());
