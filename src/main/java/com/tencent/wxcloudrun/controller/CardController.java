@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -48,21 +49,10 @@ public class CardController {
     }
 
     @GetMapping("/api/card/list")
-    ApiResponse list(@RequestHeader HttpHeaders headers) {
-        logger.info("/api/card/list get request");
+    ApiResponse list(@RequestParam Integer userId) {
+        logger.debug("/api/card/list get request, userId-->{}", userId);
 
-        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
-
-        logger.debug("<--/api/card/list get request, open_id-->{}", openId);
-
-        Optional<User> user = userService.getByOpenId(openId);
-
-        if (!user.isPresent()) {
-            logger.error("<--invalid openId! user not exists--> openId-->{}", openId);
-            return ApiResponse.error("invalid open_id !");
-        }
-
-        List<Card> list = cardService.listByUserId(user.get().getId());
+        List<Card> list = cardService.listByUserId(userId);
         return ApiResponse.ok(list);
 
     }
