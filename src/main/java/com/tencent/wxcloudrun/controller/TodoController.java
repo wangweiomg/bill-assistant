@@ -51,7 +51,7 @@ public class TodoController {
 
         List<Card> cards = cardService.listByUserId(user.getId());
 
-        List<Todo> cardTodos = cards.stream().map(i -> {
+        List<Todo> cardTodos = cards.stream().filter(i -> i.getBillDay() != null && i.getRepayDayNum() != null).map(i -> {
             val todo = new Todo();
             todo.setType(1);
             todo.setName(i.getName());
