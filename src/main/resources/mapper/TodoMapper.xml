@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.TodoMapper">
+
+    <resultMap id="todoMapper" type="com.tencent.wxcloudrun.model.Todo">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id" javaType="java.lang.Integer"/>
+        <result property="name" column="name" javaType="java.lang.String"/>
+        <result property="type" column="type" javaType="java.lang.Integer"/>
+        <result property="status" column="status" javaType="java.lang.Integer"/>
+        <result property="deadline" column="deadline" javaType="java.time.LocalDateTime"/>
+        <result property="completeDate" column="complete_date" javaType="java.time.LocalDateTime"/>
+        <result property="remark" column="remark" javaType="java.lang.String"/>
+        <result property="createdBy" column="created_by" javaType="java.lang.Integer"/>
+        <result property="createdAt" column="created_at" javaType="java.time.LocalDateTime" />
+        <result property="updatedBy" column="updated_by" javaType="java.lang.Integer"  />
+        <result property="updatedAt" column="updated_at" javaType="java.time.LocalDateTime"  />
+        <result property="deleteFlag" column="delete_flag" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <sql id="todoColumns">
+        id,
+        user_id,
+        name,
+        type,
+        status,
+        deadline,
+        complete_date,
+        remark,
+        created_by,
+        created_at,
+        updated_by,
+        updated_at,
+        delete_flag
+    </sql>
+
+    <select id="getById" resultMap="todoMapper" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="todoColumns"></include>
+        FROM t_todo
+        WHERE id = #{id}
+    </select>
+
+    <select id="listByUserId" resultMap="todoMapper" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="todoColumns"></include>
+        FROM t_todo
+        WHERE user_id = #{userId}
+        AND delete_flag = 0
+        ORDER BY deadline ASC
+    </select>
+
+    <insert id="save" parameterType="com.tencent.wxcloudrun.model.Todo">
+        INSERT INTO t_todo (
+            user_id,
+            name,
+            type,
+            status,
+            deadline,
+            remark,
+            created_by
+            )
+        VALUES (
+            #{userId},
+            #{name},
+            #{type},
+            #{status},
+            #{deadline},
+            #{remark},
+            #{createdBy}
+            )
+    </insert>
+
+    <update id="update" parameterType="com.tencent.wxcloudrun.model.Todo">
+        UPDATE `t_todo`
+        <set>
+            <if test="name != null and name !=''">
+                name = #{name}
+            </if>
+            <if test="type != null">
+                type = #{type}
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
+
+            <if test="deadline != null">
+                deadline = #{deadline}
+            </if>
+
+            <if test="completeDate != null">
+                complete_date = #{completeDate}
+            </if>
+
+            <if test="remark != null and remark != ''">
+                remark = #{remark}
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy}
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="remove">
+        UPDATE t_todo
+        SET delete_flag = 1
+        WHERE id = #{id}
+    </update>
+
+</mapper>

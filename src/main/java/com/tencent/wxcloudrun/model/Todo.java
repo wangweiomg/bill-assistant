@@ -2,11 +2,14 @@ package com.tencent.wxcloudrun.model;
 
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 public class Todo {
+
+    private Integer id;
+
+    private Integer userId;
 
     private String name;
 
@@ -27,17 +30,13 @@ public class Todo {
      */
     private Integer status;
 
-    /**
-     * 多期账单， 某一期的起止日期
-     */
-    private String period;
 
     /**
      * 截止日期
      */
-    private LocalDate deadline;
+    private LocalDateTime deadline;
 
-    private LocalDateTime completeDay;
+    private LocalDateTime completeDate;
 
     /**
      * 备注
@@ -49,6 +48,8 @@ public class Todo {
 
     private Integer updatedBy;
     private LocalDateTime updatedAt;
+
+    private Integer deleteFlag;
 
 
 }

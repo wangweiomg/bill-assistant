@@ -53,3 +53,20 @@ CREATE TABLE `t_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_t_card_open_id` (`wx_open_id`) USING BTREE
 ) ENGINE=InnoDB COMMENT='微信用户信息表';
+
+
+CREATE TABLE `t_todo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `type` tinyint(1) DEFAULT NULL COMMENT '1. credit card 2.promissory 3.iou 4.other',
+  `status` tinyint(1) DEFAULT NULL COMMENT '0.active 1.overdue 2.done_before_due 3. done_after_due 4. done_after_due by system',
+  `deadline` date DEFAULT NULL,
+  `complete_date` datetime DEFAULT NULL,
+  `remark` varchar(100) DEFAULT '',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `delete_flag` tinyint(1) DEFAULT '0' COMMENT '0未删除 1 删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB COMMENT='task列表';

@@ -85,7 +85,6 @@ public class TodoController {
             }
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            todo.setPeriod(formatter.format(billDate) + " - " + formatter.format(repayDate));
 
             todo.setStatus(0);
 
