@@ -86,16 +86,26 @@ public class TodoController {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+            todo.setDeadline(repayDate.plusDays(1).atStartOfDay().plusSeconds(-1));
             todo.setStatus(0);
+            todo.setId(i.getId());
+            todo.setRemark("账单日: " + formatter.format(billDate) + ", 还款日:" + formatter.format(repayDate));
 
             return todo;
-        }).collect(Collectors.toList());
+        }).sorted((o1, o2)-> o1.getDeadline().isBefore(o2.getDeadline()) ? 1:-1).collect(Collectors.toList());
 
 
         return ApiResponse.ok(cardTodos);
 
 
 
+    }
+
+    public static void main(String[] args) {
+        LocalDate now = LocalDate.now();
+        System.out.println(now);
+        System.out.println(now.atStartOfDay());
+        System.out.println(now.plusDays(1).atStartOfDay().plusSeconds(-1));
     }
 
 }
