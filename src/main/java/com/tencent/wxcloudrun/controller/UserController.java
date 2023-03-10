@@ -45,7 +45,7 @@ public class UserController {
 
         userService.upsert(user);
 
-        return ApiResponse.ok();
+        return ApiResponse.ok(user);
 
     }
 

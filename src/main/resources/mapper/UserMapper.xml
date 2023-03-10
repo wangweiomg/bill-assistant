@@ -62,7 +62,7 @@
         WHERE id = #{id}
     </select>
 
-    <update id="upsert" parameterType="com.tencent.wxcloudrun.model.User">
+    <update id="upsert" parameterType="com.tencent.wxcloudrun.model.User" useGeneratedKeys="true" keyColumn="id">
         INSERT INTO `t_user`(
             nickname,
             email,

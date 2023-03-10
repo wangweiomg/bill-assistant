@@ -19,9 +19,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void upsert(User user) {
+    public User upsert(User user) {
 
         userMapper.upsert(user);
+
+        return user;
 
     }
 
