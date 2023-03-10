@@ -2,12 +2,14 @@ package com.tencent.wxcloudrun.model;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 public class Todo {
 
     private String name;
+
     /**
      * 1. credit card
      * 2. promissory
@@ -30,7 +32,16 @@ public class Todo {
      */
     private String period;
 
+    /**
+     * 截止日期
+     */
+    private LocalDate deadline;
 
+    private LocalDateTime completeDay;
+
+    /**
+     * 备注
+     */
     private String remark;
 
     private Integer createdBy;
