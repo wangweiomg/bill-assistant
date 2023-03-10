@@ -84,14 +84,10 @@ public class CardController {
     }
 
     @PostMapping(value = "/api/card/remove/{id}")
-    ApiResponse delete(@PathVariable Integer id, @RequestHeader HttpHeaders headers) {
-        logger.info("<-- /api/card/remove post request-->");
+    ApiResponse delete(@PathVariable Integer id) {
+        logger.info("<-- /api/card/remove post request, cardId-->{}", id);
 
-        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
-
-        Optional<User> user = userService.getByOpenId(openId);
-
-        user.ifPresent(value -> cardService.remove(id));
+        cardService.remove(id);
 
         return ApiResponse.ok();
 
