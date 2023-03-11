@@ -37,19 +37,12 @@ public class TodoController {
     }
 
     @GetMapping(value = "/api/todo/list")
-    ApiResponse list(@RequestHeader HttpHeaders headers) {
+    ApiResponse list(@RequestParam Integer userId) {
 
         log.info("<--/api/todo/list get request!");
 
-        Optional<User> opUser = userService.getByOpenId(headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID));
 
-        if (!opUser.isPresent()) {
-            log.warn("<--invalid user open_id !");
-            return ApiResponse.ok();
-        }
-
-
-        List<Card> cards = cardService.listByUserId(opUser.get().getId());
+        List<Card> cards = cardService.listByUserId(userId);
 
         List<Todo> cardTodos = cards.stream().filter(i -> i.getBillDay() != null && i.getRepayDayNum() != null).map(i -> {
 
