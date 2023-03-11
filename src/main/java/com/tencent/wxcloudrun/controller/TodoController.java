@@ -52,9 +52,7 @@ public class TodoController {
         List<Card> cards = cardService.listByUserId(user.getId());
 
         List<Todo> cardTodos = cards.stream().filter(i -> i.getBillDay() != null && i.getRepayDayNum() != null).map(i -> {
-            val todo = new Todo();
-            todo.setType(1);
-            todo.setName(i.getName());
+
 
             LocalDate now = LocalDate.now();
             boolean isBilled = now.getDayOfMonth() > i.getBillDay();
@@ -86,13 +84,16 @@ public class TodoController {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+            val todo = new Todo();
+            todo.setType(1);
+            todo.setName(i.getName() + "    " + "账单日: " + formatter.format(billDate) + ", 还款日:" + formatter.format(repayDate));
             todo.setDeadline(repayDate.plusDays(1).atStartOfDay().plusSeconds(-1));
             todo.setStatus(0);
             todo.setId(i.getId());
             todo.setRemark("账单日: " + formatter.format(billDate) + ", 还款日:" + formatter.format(repayDate));
 
             return todo;
-        }).sorted((o1, o2)-> o1.getDeadline().isBefore(o2.getDeadline()) ? 1:-1).collect(Collectors.toList());
+        }).sorted().collect(Collectors.toList());
 
 
         return ApiResponse.ok(cardTodos);
