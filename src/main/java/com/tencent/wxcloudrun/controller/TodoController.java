@@ -85,7 +85,9 @@ public class TodoController {
             todo.setDeadline(repayDate.plusDays(1).atStartOfDay().plusSeconds(-1));
             todo.setStatus(0);
             todo.setId(i.getId());
-
+            if (todo.getDeadline().toLocalDate().isBefore(LocalDate.now())) {
+                todo.setStatus(1);
+            }
             return todo;
         }).sorted(Comparator.comparing(Todo::getDeadline)).collect(Collectors.toList());
 
