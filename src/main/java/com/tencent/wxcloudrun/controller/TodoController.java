@@ -102,11 +102,5 @@ public class TodoController {
 
     }
 
-    public static void main(String[] args) {
-        LocalDate now = LocalDate.now();
-        System.out.println(now);
-        System.out.println(now.atStartOfDay());
-        System.out.println(now.plusDays(1).atStartOfDay().plusSeconds(-1));
-    }
 
 }
