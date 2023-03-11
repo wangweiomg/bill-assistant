@@ -87,7 +87,7 @@ public class TodoController {
 
             val todo = new Todo();
             todo.setType(1);
-            todo.setName(i.getName() + "    " + "账单日: " + formatter.format(billDate) + ", 还款日:" + formatter.format(repayDate));
+            todo.setName(i.getName() + " 还款日:" + formatter.format(repayDate));
             todo.setDeadline(repayDate.plusDays(1).atStartOfDay().plusSeconds(-1));
             todo.setStatus(0);
             todo.setId(i.getId());
