@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -36,21 +37,11 @@ public class TodoController {
     }
 
     @GetMapping(value = "/api/todo/list")
-    ApiResponse list(@RequestHeader HttpHeaders headers) {
+    ApiResponse list(@RequestParam Integer userId) {
 
-        log.info("<--/api/todo/list get request-->");
+        log.info("<--/api/todo/list get request!  userId-->{}", userId);
 
-        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
-
-        Optional<User> userOptional = userService.getByOpenId(openId);
-
-        if (!userOptional.isPresent()) {
-            return ApiResponse.error("<--invalid user!");
-        }
-
-        User user = userOptional.get();
-
-        List<Card> cards = cardService.listByUserId(user.getId());
+        List<Card> cards = cardService.listByUserId(userId);
 
         List<Todo> cardTodos = cards.stream().filter(i -> i.getBillDay() != null && i.getRepayDayNum() != null).map(i -> {
 
@@ -83,15 +74,14 @@ public class TodoController {
                 }
             }
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
 
             val todo = new Todo();
             todo.setType(1);
-            todo.setName(i.getName() + " 还款日:" + formatter.format(repayDate));
+            todo.setName(i.getName() + "        还款日:" + formatter.format(repayDate));
             todo.setDeadline(repayDate.plusDays(1).atStartOfDay().plusSeconds(-1));
             todo.setStatus(0);
             todo.setId(i.getId());
-            todo.setRemark("账单日: " + formatter.format(billDate) + ", 还款日:" + formatter.format(repayDate));
 
             return todo;
         }).sorted(Comparator.comparingInt(o -> o.getDeadline().getSecond())).collect(Collectors.toList());
