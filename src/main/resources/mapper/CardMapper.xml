@@ -102,7 +102,7 @@
                 password = #{password}
             </if>
 
-            <if test="bankdId != null and bankId !=''">
+            <if test="bankId != null and bankId !=''">
                 bank_id = #{bankId}
             </if>
 
