@@ -93,52 +93,53 @@
         UPDATE `t_card`
         <set>
             <if test="name != null and name !=''">
-                name = #{name}
+                name = #{name},
             </if>
             <if test="cardNo != null and cardNo != ''">
-                card_no = #{cardNo}
+                card_no = #{cardNo},
             </if>
             <if test="password != null and password != ''">
-                password = #{password}
+                password = #{password},
             </if>
 
             <if test="bankId != null and bankId !=''">
-                bank_id = #{bankId}
+                bank_id = #{bankId},
             </if>
 
             <if test="cardType != null">
-                card_type = #{cardType}
+                card_type = #{cardType},
             </if>
 
             <if test="cardLimit != null">
-                card_limit = #{cardLimit}
+                card_limit = #{cardLimit},
             </if>
 
             <if test="billDay != null">
-                bill_day = #{billDay}
+                bill_day = #{billDay},
             </if>
 
             <if test="repayDayType != null">
-                repay_day_type = #{repayDayType}
+                repay_day_type = #{repayDayType},
             </if>
 
             <if test="repayDayNum != null">
-                repay_day_num = #{repayDayNum}
+                repay_day_num = #{repayDayNum},
             </if>
 
             <if test="status != null">
-                status = #{status}
+                status = #{status},
             </if>
 
             <if test="remark != null and remark != ''">
-                remark = #{remark}
+                remark = #{remark},
             </if>
             <if test="updatedBy != null">
-                updated_by = #{updatedBy}
+                updated_by = #{updatedBy},
             </if>
             <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag}
+                delete_flag = #{deleteFlag},
             </if>
+            updated_at = NOW()
         </set>
         WHERE id = #{id}
     </update>

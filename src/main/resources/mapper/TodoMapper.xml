@@ -75,32 +75,33 @@
         UPDATE `t_todo`
         <set>
             <if test="name != null and name !=''">
-                name = #{name}
+                name = #{name},
             </if>
             <if test="type != null">
-                type = #{type}
+                type = #{type},
             </if>
             <if test="status != null">
-                status = #{status}
+                status = #{status},
             </if>
 
             <if test="deadline != null">
-                deadline = #{deadline}
+                deadline = #{deadline},
             </if>
 
             <if test="completeDate != null">
-                complete_date = #{completeDate}
+                complete_date = #{completeDate},
             </if>
 
             <if test="remark != null and remark != ''">
-                remark = #{remark}
+                remark = #{remark},
             </if>
             <if test="updatedBy != null">
-                updated_by = #{updatedBy}
+                updated_by = #{updatedBy},
             </if>
             <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag}
+                delete_flag = #{deleteFlag},
             </if>
+            updated_at = NOW()
         </set>
         WHERE id = #{id}
     </update>
