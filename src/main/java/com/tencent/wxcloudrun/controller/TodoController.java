@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -85,11 +87,10 @@ public class TodoController {
             todo.setId(i.getId());
 
             return todo;
-        }).sorted(Comparator.comparingInt(o -> o.getDeadline().getSecond())).collect(Collectors.toList());
+        }).sorted(Comparator.comparing(Todo::getDeadline)).collect(Collectors.toList());
 
 
         return ApiResponse.ok(cardTodos);
-
 
 
     }
