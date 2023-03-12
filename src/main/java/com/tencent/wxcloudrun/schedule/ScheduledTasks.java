@@ -32,7 +32,7 @@ public class ScheduledTasks {
     /**
      * 每天凌晨生成当天新出的待办
      */
-    @Scheduled(cron = "0 5 0 * * ?")
+    @Scheduled(cron = "0 15 0 * * ?")
     public void generateTodos() {
 
 
