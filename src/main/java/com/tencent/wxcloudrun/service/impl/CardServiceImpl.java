@@ -48,4 +48,15 @@ public class CardServiceImpl implements CardService{
 
     }
 
+    @Override
+    public List<Card> listAll() {
+
+        return cardMapper.listAll();
+    }
+
+    @Override
+    public List<Card> listByBillDay(Integer billDay) {
+        return cardMapper.listByBillDay(billDay);
+    }
+
 }

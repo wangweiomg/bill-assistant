@@ -18,4 +18,6 @@ public interface TodoMapper {
     void update(Todo todo);
 
     void remove(Integer id);
+
+    void batchInsert(@Param("list") List<Todo> todos);
 }

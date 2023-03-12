@@ -17,4 +17,8 @@ public interface CardService {
     void update(Card card);
 
     void remove(Integer id);
+
+    List<Card> listAll();
+
+    List<Card> listByBillDay(Integer billDay);
 }

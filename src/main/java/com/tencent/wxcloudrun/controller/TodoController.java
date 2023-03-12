@@ -1,29 +1,22 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
-import com.tencent.wxcloudrun.constants.WxRequestHeaderNamesConstant;
-import com.tencent.wxcloudrun.dto.TodoResponse;
 import com.tencent.wxcloudrun.model.Card;
 import com.tencent.wxcloudrun.model.Todo;
-import com.tencent.wxcloudrun.model.User;
 import com.tencent.wxcloudrun.service.CardService;
 import com.tencent.wxcloudrun.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -94,6 +87,14 @@ public class TodoController {
 
         return ApiResponse.ok(cardTodos);
 
+
+    }
+
+    @PostMapping(value = "/api/todo/update")
+    ApiResponse update() {
+
+
+        return ApiResponse.ok();
 
     }
 

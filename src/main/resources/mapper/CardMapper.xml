@@ -60,6 +60,21 @@
         ORDER BY bill_day ASC
     </select>
 
+    <select id="listAll" resultMap="cardMapper">
+        SELECT
+        <include refid="cardColumns"></include>
+        FROM t_card
+        WHERE delete_flag = 0
+    </select>
+
+    <select id="listByBillDay" parameterType="java.lang.Integer" resultMap="cardMapper">
+        SELECT
+        <include refid="cardColumns"></include>
+        FROM t_card
+        WHERE delete_flag = 0
+        AND bill_day = #{billDay}
+    </select>
+
     <insert id="save" parameterType="com.tencent.wxcloudrun.model.Card">
         INSERT INTO t_card (
             user_id,

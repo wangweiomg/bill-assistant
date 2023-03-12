@@ -112,4 +112,28 @@
         WHERE id = #{id}
     </update>
 
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_todo (
+            user_id,
+            name,
+            type,
+            status,
+            deadline,
+            remark,
+            created_by
+
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{userId},
+            #{name},
+            #{type},
+            #{status},
+            #{deadline},
+            #{remark},
+            #{createdBy}
+
+        </foreach>
+    </insert>
+
 </mapper>
