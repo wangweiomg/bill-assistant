@@ -79,4 +79,13 @@ public class ScheduledTasks {
 
     }
 
+    /**
+     * 把过期的todos修改为过期
+     */
+//    @Scheduled(cron = "0 33 0 * * ?")
+    public void updateTodos() {
+        // TODO: 2023/3/13 把过期的todos修改状态为过期 
+
+    }
+
 }
