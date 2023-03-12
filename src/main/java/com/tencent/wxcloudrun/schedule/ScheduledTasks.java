@@ -32,10 +32,13 @@ public class ScheduledTasks {
     /**
      * 每天凌晨生成当天新出的待办
      */
-    @Scheduled(cron = "0 10 0 * * ?")
+    @Scheduled(cron = "0 5 0 * * ?")
     public void generateTodos() {
 
+
         LocalDate today = LocalDate.now();
+
+        log.info("<--start generating {} todos!-->", today);
 
         // 查出所有的card, 当天出账单就生成一条待办
         int billDay = today.plusDays(-1).getDayOfMonth();
@@ -71,6 +74,8 @@ public class ScheduledTasks {
 
 
         todoService.batchInsert(todos);
+
+        log.info("<--end generating todos!-->");
 
     }
 
