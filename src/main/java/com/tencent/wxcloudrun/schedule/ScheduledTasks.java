@@ -11,9 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,15 +35,16 @@ public class ScheduledTasks {
     @Scheduled(cron = "0 10 0 * * ?")
     public void generateTodos() {
 
+        LocalDate today = LocalDate.now();
+
         // 查出所有的card, 当天出账单就生成一条待办
-        int billDay = LocalDate.now().getDayOfMonth();
+        int billDay = today.plusDays(-1).getDayOfMonth();
         List<Card> list = cardService.listByBillDay(billDay);
 
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
 
-        LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
 
         List<Todo> todos = list.stream().map(i -> {
