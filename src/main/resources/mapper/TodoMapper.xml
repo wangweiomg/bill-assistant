@@ -124,14 +124,14 @@
 
         )
         VALUES
-        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{userId},
-            #{name},
-            #{type},
-            #{status},
-            #{deadline},
-            #{remark},
-            #{createdBy}
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator="),(">
+            #{item.userId},
+            #{item.name},
+            #{item.type},
+            #{item.status},
+            #{item.deadline},
+            #{item.remark},
+            #{item.createdBy}
 
         </foreach>
     </insert>
