@@ -20,4 +20,6 @@ public interface TodoMapper {
     void remove(Integer id);
 
     void batchInsert(@Param("list") List<Todo> todos);
+
+    void expire();
 }

@@ -8,4 +8,6 @@ public interface TodoService {
 
 
     void batchInsert(List<Todo> todos);
+
+    void expire();
 }

@@ -22,4 +22,10 @@ public class TodoServiceImpl implements TodoService {
         todoMapper.batchInsert(todos);
 
     }
+
+    @Override
+    public void expire() {
+        todoMapper.expire();
+    }
+
 }

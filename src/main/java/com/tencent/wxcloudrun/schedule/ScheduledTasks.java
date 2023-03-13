@@ -32,7 +32,7 @@ public class ScheduledTasks {
     /**
      * 每天凌晨生成当天新出的待办
      */
-    @Scheduled(cron = "0 33 0 * * ?")
+    @Scheduled(cron = "0 10 0 * * ?")
     public void generateTodos() {
 
 
@@ -82,9 +82,10 @@ public class ScheduledTasks {
     /**
      * 把过期的todos修改为过期
      */
-//    @Scheduled(cron = "0 33 0 * * ?")
+    @Scheduled(cron = "0 15 0 * * ?")
     public void updateTodos() {
-        // TODO: 2023/3/13 把过期的todos修改状态为过期 
+        // 把过期的todos修改状态为过期
+        todoService.expire();
 
     }
 
