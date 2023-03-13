@@ -146,12 +146,7 @@
 
     <update id="batchUpdate" parameterType="com.tencent.wxcloudrun.model.Todo">
         <foreach collection="list" item="item" index="index" separator=";">
-            UPDATE t_todo
-                SET status = #{item.status},
-                    complete_date = #{item.completeDate},
-                    updated_by = #{item.updatedBy},
-                    updated_at = #{item.updatedAt}
-            WHERE id = #{item.id}
+            UPDATE t_todo SET complete_date = #{item.completeDate}, status = #{item.status}, updated_by = #{item.updatedBy}, updated_at = #{item.updatedAt} WHERE id = #{item.id}
         </foreach>
     </update>
 
