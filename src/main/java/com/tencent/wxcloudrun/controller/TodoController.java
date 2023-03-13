@@ -10,6 +10,7 @@ import com.tencent.wxcloudrun.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -98,6 +99,12 @@ public class TodoController {
     ApiResponse update(@RequestBody List<TodoRequest> list, @RequestParam Integer userId) {
 
         log.info("<--/api/todo/update-->userId-->{}, list-->{}", userId, list);
+
+        if (CollectionUtils.isEmpty(list)) {
+            log.warn("<--no todos need to update, list is empty!-->");
+            return ApiResponse.ok();
+        }
+
 
         List<Todo> todos = list.stream().map(i -> {
             val todo = new Todo();

@@ -31,6 +31,7 @@ public class ScheduledTasks {
 
     /**
      * 每天凌晨生成当天新出的待办
+     * TODO 要避免分布式问题, 计划用ehcache
      */
     @Scheduled(cron = "0 10 0 * * ?")
     public void generateTodos() {
