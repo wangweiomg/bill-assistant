@@ -147,8 +147,8 @@
     <update id="batchUpdate">
         <foreach collection="list" item="item" index="index" separator=";">
             UPDATE t_todo
-                SET status=#{item.status},
-                    complete_date=#{item.completeDate},
+                SET status = #{item.status},
+                    complete_date = #{item.completeDate},
                     updated_by = #{item.updatedBy},
                     updated_at = #{item.updatedAt}
             WHERE id = #{item.id}

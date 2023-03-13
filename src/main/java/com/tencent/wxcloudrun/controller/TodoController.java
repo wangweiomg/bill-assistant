@@ -103,7 +103,7 @@ public class TodoController {
             val todo = new Todo();
             todo.setId(i.getId());
             todo.setStatus(i.getStatus());
-            if (i.getStatus() > 1) {
+            if (i.getChecked()) {
                 todo.setCompleteDate(LocalDateTime.now());
             }
             todo.setUpdatedBy(userId);
