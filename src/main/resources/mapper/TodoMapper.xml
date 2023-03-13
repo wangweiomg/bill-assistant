@@ -151,7 +151,7 @@
                     complete_date=#{item.completeDate},
                     updated_by = #{item.updatedBy},
                     updated_at = #{item.updatedAt}
-            WHERE id = #{id}
+            WHERE id = #{item.id}
         </foreach>
         ;
     </update>
