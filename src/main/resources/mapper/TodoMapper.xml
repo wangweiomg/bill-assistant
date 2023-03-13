@@ -144,4 +144,16 @@
         </foreach>
     </insert>
 
+    <update id="batchUpdate">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE t_todo
+                SET status=#{status},
+                    complete_date=#{completeDate},
+                    updated_by = #{updatedBy},
+                    updated_at = #{updatedAt}
+            WHERE id = #{id}
+        </foreach>
+        ;
+    </update>
+
 </mapper>

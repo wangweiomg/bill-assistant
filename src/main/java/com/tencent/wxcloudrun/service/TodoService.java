@@ -9,7 +9,10 @@ public interface TodoService {
 
     void batchInsert(List<Todo> todos);
 
+    void batchUpdate(List<Todo> todos);
+
     void expire();
 
     List<Todo> listByUserId(Integer userId);
+
 }

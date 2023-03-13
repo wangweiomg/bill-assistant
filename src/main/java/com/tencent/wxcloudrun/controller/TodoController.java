@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -98,6 +99,20 @@ public class TodoController {
 
         log.info("<--/api/todo/update-->userId-->{}, list-->{}", userId, list);
 
+        List<Todo> todos = list.stream().map(i -> {
+            val todo = new Todo();
+            todo.setId(i.getId());
+            todo.setStatus(i.getStatus());
+            if (i.getStatus() > 1) {
+                todo.setCompleteDate(LocalDateTime.now());
+            }
+            todo.setUpdatedBy(userId);
+            todo.setUpdatedAt(LocalDateTime.now());
+            return todo;
+
+        }).collect(Collectors.toList());
+
+        todoService.batchUpdate(todos);
 
         return ApiResponse.ok();
 

@@ -21,5 +21,8 @@ public interface TodoMapper {
 
     void batchInsert(@Param("list") List<Todo> todos);
 
+    void batchUpdate(@Param("list") List<Todo> todos);
+
     void expire();
+
 }

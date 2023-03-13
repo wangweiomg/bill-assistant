@@ -24,6 +24,11 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public void batchUpdate(List<Todo> todos) {
+        todoMapper.batchUpdate(todos);
+    }
+
+    @Override
     public void expire() {
         todoMapper.expire();
     }
