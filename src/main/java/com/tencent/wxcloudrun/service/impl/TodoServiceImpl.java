@@ -28,4 +28,9 @@ public class TodoServiceImpl implements TodoService {
         todoMapper.expire();
     }
 
+    @Override
+    public List<Todo> listByUserId(Integer userId) {
+        return todoMapper.listByUserId(userId);
+    }
+
 }

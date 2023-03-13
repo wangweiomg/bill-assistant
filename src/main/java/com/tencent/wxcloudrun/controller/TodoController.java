@@ -4,6 +4,7 @@ import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.model.Card;
 import com.tencent.wxcloudrun.model.Todo;
 import com.tencent.wxcloudrun.service.CardService;
+import com.tencent.wxcloudrun.service.TodoService;
 import com.tencent.wxcloudrun.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -25,10 +26,12 @@ public class TodoController {
 
     final UserService userService;
     final CardService cardService;
+    final TodoService todoService;
 
-    public TodoController (@Autowired UserService userService, @Autowired CardService cardService) {
+    public TodoController (@Autowired UserService userService, @Autowired CardService cardService, @Autowired TodoService todoService) {
         this.userService = userService;
         this.cardService = cardService;
+        this.todoService = todoService;
     }
 
     @GetMapping(value = "/api/todo/list")
@@ -85,7 +88,9 @@ public class TodoController {
         }).sorted(Comparator.comparing(Todo::getDeadline)).collect(Collectors.toList());
 
 
-        return ApiResponse.ok(cardTodos);
+        List<Todo> list = todoService.listByUserId(userId);
+
+        return ApiResponse.ok(list);
 
 
     }
