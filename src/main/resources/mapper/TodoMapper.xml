@@ -149,7 +149,7 @@
             UPDATE t_todo
             <set>
                 <choose>
-                    <when test="completeDate != null">
+                    <when test="item.completeDate != null">
                         complete_date = NOW(),
                     </when>
                     <otherwise>
