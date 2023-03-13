@@ -158,7 +158,7 @@
                 </choose>
                 status = #{item.status},
                 updated_by = #{item.updatedBy},
-                updated_at = #{item.updatedAt}
+                updated_at = now()
             </set>
              WHERE id = #{item.id}
         </foreach>
