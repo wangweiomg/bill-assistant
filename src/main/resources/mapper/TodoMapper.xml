@@ -150,7 +150,7 @@
             <set>
                 <choose>
                     <when test="item.completeDate != null">
-                        complete_date = NOW(),
+                        complete_date = #{item.completeDate},
                     </when>
                     <otherwise>
                         complete_date = NULL,
@@ -158,7 +158,7 @@
                 </choose>
                 status = #{item.status},
                 updated_by = #{item.updatedBy},
-                updated_at = now()
+                updated_at = #{item.updatedAt}
             </set>
              WHERE id = #{item.id}
         </foreach>
