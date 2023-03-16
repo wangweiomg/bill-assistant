@@ -35,8 +35,6 @@ public class UserController {
 
         WxRequestHeader header = WxHeaderUtil.covertToWxRequest(headers);
 
-        //todo 通过openId 获取用户公开信息
-
         User user = new User();
         user.setWxOpenId(header.getOpenId());
         user.setWxAppId(header.getAppId());

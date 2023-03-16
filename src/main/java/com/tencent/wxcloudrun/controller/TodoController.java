@@ -37,56 +37,7 @@ public class TodoController {
     @GetMapping(value = "/api/todo/list")
     ApiResponse list(@RequestParam Integer userId) {
 
-        log.info("<--/api/todo/list get request!");
-
-
-        List<Card> cards = cardService.listByUserId(userId);
-
-        List<Todo> cardTodos = cards.stream().filter(i -> i.getBillDay() != null && i.getRepayDayNum() != null).map(i -> {
-
-
-            LocalDate now = LocalDate.now();
-            boolean isBilled = now.getDayOfMonth() > i.getBillDay();
-
-            LocalDate billDate = now;
-            LocalDate repayDate = now;
-            if (isBilled) {
-                billDate = now.withDayOfMonth(i.getBillDay());
-
-                if (i.getRepayDayType() == 1) {
-                    repayDate = i.getRepayDayNum() > i.getBillDay() ? now.withDayOfMonth(i.getRepayDayNum()) : now.withDayOfMonth(i.getRepayDayNum()).plusMonths(1);
-                } else {
-                    repayDate = billDate.plusDays(i.getRepayDayNum());
-                }
-
-            } else {
-
-                billDate = now.withDayOfMonth(i.getBillDay()).plusMonths(-1);
-
-                if (i.getRepayDayType() == 1) {
-
-                    repayDate = now.withDayOfMonth(i.getRepayDayNum()).plusMonths(-1).isBefore(billDate) ? now.withDayOfMonth(i.getRepayDayNum()) : now.withDayOfMonth(i.getRepayDayNum()).plusMonths(-1);
-
-                } else {
-
-                    repayDate = billDate.plusDays(i.getRepayDayNum());
-                }
-            }
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
-
-            val todo = new Todo();
-            todo.setType(1);
-            todo.setName(i.getName() + "        还款日:" + formatter.format(repayDate));
-            todo.setDeadline(repayDate.plusDays(1).atStartOfDay().plusSeconds(-1));
-            todo.setStatus(0);
-            todo.setId(i.getId());
-            if (todo.getDeadline().toLocalDate().isBefore(LocalDate.now())) {
-                todo.setStatus(1);
-            }
-            return todo;
-        }).sorted(Comparator.comparing(Todo::getDeadline)).collect(Collectors.toList());
-
+        log.info("<--/api/todo/list get request! userId-->{}", userId);
 
         List<Todo> list = todoService.listByUserId(userId);
 
