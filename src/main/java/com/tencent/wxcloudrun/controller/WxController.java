@@ -53,6 +53,14 @@ public class WxController {
 
         log.debug("<-- getphonenumber res.body-->{}", res.getBody());
 
+        try {
+            String result = restTemplate.getForObject("http://192.53.170.34:4000/", String.class, body);
+            log.info("<---test flask hello world!--->{}", result);
+
+
+        } catch (Exception e) {
+            log.error("<--test request hello world error-->", e);
+        }
 
 
         try {
