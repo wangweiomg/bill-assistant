@@ -6,8 +6,6 @@ import com.tencent.wxcloudrun.constants.WxRequestHeaderNamesConstant;
 import com.tencent.wxcloudrun.dto.wx.WxPhoneNumberResponse;
 import com.tencent.wxcloudrun.model.User;
 import com.tencent.wxcloudrun.service.UserService;
-import com.theokanning.openai.completion.CompletionRequest;
-import com.theokanning.openai.service.OpenAiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
