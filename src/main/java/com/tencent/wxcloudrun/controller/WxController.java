@@ -6,6 +6,8 @@ import com.tencent.wxcloudrun.constants.WxRequestHeaderNamesConstant;
 import com.tencent.wxcloudrun.dto.wx.WxPhoneNumberResponse;
 import com.tencent.wxcloudrun.model.User;
 import com.tencent.wxcloudrun.service.UserService;
+import com.theokanning.openai.completion.CompletionRequest;
+import com.theokanning.openai.service.OpenAiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -20,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 @Slf4j
 @RestController
@@ -27,10 +30,12 @@ public class WxController {
 
     final RestTemplate restTemplate;
     final UserService userService;
+    final OpenAiService openAiService;
 
-    public WxController(@Autowired RestTemplate restTemplate, @Autowired UserService userService) {
+    public WxController(@Autowired RestTemplate restTemplate, @Autowired UserService userService, @Autowired OpenAiService openAiService) {
         this.restTemplate = restTemplate;
         this.userService = userService;
+        this.openAiService = openAiService;
     }
 
 
@@ -56,6 +61,31 @@ public class WxController {
         try {
             String result = restTemplate.getForObject("http://192.53.170.34:4000/", String.class, body);
             log.info("<---test flask hello world!--->{}", result);
+
+
+            String [] prompts = new String[] {
+                    "springboot为什么这么流行",
+                    "nodejs koa 和 springboot比较",
+                    "go语言很流行吗",
+                    "为什么Rust 的包管理这么好用",
+                    "微信小程序是什么",
+                    "Why Chinese people like living in apartment buildings",
+                    "How to be a Java coder",
+                    "What's the most popular web browser in the world"
+            };
+
+            String prompt = prompts[new Random().nextInt(8)];
+
+
+            CompletionRequest completionRequest = CompletionRequest.builder()
+                    .prompt(prompt)
+                    .model("gpt-3.5-turbo")
+                    .echo(true)
+                    .build();
+
+            openAiService.createCompletion(completionRequest).getChoices().forEach(i -> {
+                log.info("<--prompt-->{}, choice index {}--> {}", prompt,  i.getIndex(), i.getText());
+            });
 
 
         } catch (Exception e) {
