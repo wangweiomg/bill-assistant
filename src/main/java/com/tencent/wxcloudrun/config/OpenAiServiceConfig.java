@@ -12,31 +12,26 @@ import org.springframework.util.StringUtils;
 public class OpenAiServiceConfig {
 
 
-    @Value("${third.openai.token}")
-    private String token;
 
     @Bean
     public OpenAiService openAiService() {
 
 
+        String token = "hello_world!";
 
         String key1 = System.getenv("OPENAI_TOKEN");
         String key2 = System.getProperty("OPENAI_TOKEN");
 
-        log.info(" openai token has-->{}, env-->{}, prop-->{}", StringUtils.hasText(token), StringUtils.hasText(key1), StringUtils.hasText(key2));
-
-        if (!StringUtils.hasText(token)) {
-
-            if (StringUtils.hasText(key1)) {
-                token = key1;
-            } else {
-                if (StringUtils.hasText(key2)) {
-                    token = key2;
-                }
-            }
+        log.info(" openai token env-->{}, prop-->{}",  StringUtils.hasText(key1), StringUtils.hasText(key2));
 
 
+        if (StringUtils.hasText(key1)) {
+            token = key1;
+        } else if (StringUtils.hasText(key2)){
+            token = key2;
         }
+
+
 
         return new OpenAiService(token);
 
