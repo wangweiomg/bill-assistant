@@ -72,10 +72,11 @@ public class WxController {
                     "Why Chinese people like living in apartment buildings",
                     "How to be a Java coder",
                     "What's the most popular web browser in the world",
-                    "Who's the most beautiful girl in the world"
+                    "Who's the most beautiful girl in the world",
+                    "How can I learn English"
             };
 
-            String prompt = prompts[new Random().nextInt(9)];
+            String prompt = prompts[new Random().nextInt(10)];
 
 
             CompletionRequest completionRequest = CompletionRequest.builder()
