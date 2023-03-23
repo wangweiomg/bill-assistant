@@ -22,3 +22,7 @@ logging:
     root: info
     server: debug
     sql: trace
+
+third:
+  openai:
+    key: ${OPENAI_TOKEN}
