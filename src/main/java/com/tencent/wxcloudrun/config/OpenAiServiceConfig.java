@@ -19,7 +19,24 @@ public class OpenAiServiceConfig {
     public OpenAiService openAiService() {
 
 
-        log.info("<--openai token has-->{}, length-->{}", StringUtils.hasText(token), StringUtils.hasLength(token));
+
+        String key1 = System.getenv("OPENAI_TOKEN");
+        String key2 = System.getProperty("OPENAI_TOKEN");
+
+        log.info(" openai token has-->{}, env-->{}, prop-->{}", StringUtils.hasText(token), StringUtils.hasText(key1), StringUtils.hasText(key2));
+
+        if (!StringUtils.hasText(token)) {
+
+            if (StringUtils.hasText(key1)) {
+                token = key1;
+            } else {
+                if (StringUtils.hasText(key2)) {
+                    token = key2;
+                }
+            }
+
+
+        }
 
         return new OpenAiService(token);
 
