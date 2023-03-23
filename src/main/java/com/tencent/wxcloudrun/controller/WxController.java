@@ -10,6 +10,7 @@ import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -30,14 +31,15 @@ public class WxController {
 
     final RestTemplate restTemplate;
     final UserService userService;
-    final OpenAiService openAiService;
 
-    public WxController(@Autowired RestTemplate restTemplate, @Autowired UserService userService, @Autowired OpenAiService openAiService) {
+    public WxController(@Autowired RestTemplate restTemplate, @Autowired UserService userService) {
         this.restTemplate = restTemplate;
         this.userService = userService;
-        this.openAiService = openAiService;
     }
 
+
+    @Value("${third.chatbot.url}")
+    private String chatUrl;
 
 
     @GetMapping(value ="/api/wx/getuserphonenumber/{code}")
@@ -75,16 +77,10 @@ public class WxController {
 
             String prompt = prompts[new Random().nextInt(10)];
 
+            String result = restTemplate.getForObject(chatUrl +"?msg=" + prompt, String.class);
 
-            CompletionRequest completionRequest = CompletionRequest.builder()
-                    .prompt(prompt)
-                    .model("gpt-3.5-turbo")
-                    .echo(true)
-                    .build();
+            log.info("<--openai result-->{}", result);
 
-            openAiService.createCompletion(completionRequest).getChoices().forEach(i -> {
-                log.info("<--prompt-->{}, choice index {}--> {}", prompt,  i.getIndex(), i.getText());
-            });
 
 
         } catch (Exception e) {
