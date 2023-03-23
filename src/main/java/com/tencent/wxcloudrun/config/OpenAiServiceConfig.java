@@ -16,7 +16,7 @@ public class OpenAiServiceConfig {
     private String token;
 
     @Bean
-    public OpenAiService init() {
+    public OpenAiService openAiService() {
 
 
         log.info("<--openai token has-->{}, length-->{}", StringUtils.hasText(token), StringUtils.hasLength(token));
