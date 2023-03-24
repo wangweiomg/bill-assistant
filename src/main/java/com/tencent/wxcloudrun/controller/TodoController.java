@@ -1,23 +1,23 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.constants.WxRequestHeaderNamesConstant;
 import com.tencent.wxcloudrun.dto.TodoRequest;
-import com.tencent.wxcloudrun.model.Card;
 import com.tencent.wxcloudrun.model.Todo;
+import com.tencent.wxcloudrun.model.User;
 import com.tencent.wxcloudrun.service.CardService;
 import com.tencent.wxcloudrun.service.TodoService;
 import com.tencent.wxcloudrun.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -34,14 +34,21 @@ public class TodoController {
         this.todoService = todoService;
     }
 
+    /**
+     * 这里由于是首页，不容易获取到userId,所以从headers拿openId，然后换取userId
+     * @param headers
+     * @return
+     */
     @GetMapping(value = "/api/todo/list")
-    ApiResponse list(@RequestParam Integer userId) {
+    ApiResponse list(@RequestHeader HttpHeaders headers) {
 
-        log.info("<--/api/todo/list get request! userId-->{}", userId);
 
-        List<Todo> list = todoService.listByUserId(userId);
+        String openId = headers.getFirst(WxRequestHeaderNamesConstant.OPEN_ID);
 
-        return ApiResponse.ok(list);
+        log.info("<--/api/todo/list get request! openId-->{}", openId);
+
+        Optional<User> userOptional = userService.getByOpenId(openId);
+        return userOptional.map(user -> ApiResponse.ok(todoService.listByUserId(user.getId()))).orElseGet(ApiResponse::ok);
 
 
     }
