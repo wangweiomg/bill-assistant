@@ -21,4 +21,6 @@ public interface CardService {
     List<Card> listAll();
 
     List<Card> listByBillDay(Integer billDay);
+
+    void initSample(Integer userId);
 }
