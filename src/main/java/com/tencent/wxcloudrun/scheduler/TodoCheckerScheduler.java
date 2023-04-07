@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.schedule;
+package com.tencent.wxcloudrun.scheduler;
 
 import com.tencent.wxcloudrun.model.Card;
 import com.tencent.wxcloudrun.model.Todo;
@@ -16,14 +16,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 每天凌晨定时跑批
+ * 生成新的todo、过期改状态
+ *
+ * Author: Tristan
+ */
 @Slf4j
 @Component
-public class ScheduledTasks {
+public class TodoCheckerScheduler {
 
     final TodoService todoService;
     final CardService cardService;
 
-    public ScheduledTasks (@Autowired TodoService todoService, @Autowired CardService cardService) {
+    public TodoCheckerScheduler(@Autowired TodoService todoService, @Autowired CardService cardService) {
         this.todoService = todoService;
         this.cardService = cardService;
     }
