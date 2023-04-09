@@ -20,7 +20,7 @@ public class RestTemplateConfig {
         return restTemplate;
     }
 
-    class WxMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
+    static class WxMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
         public WxMappingJackson2HttpMessageConverter() {
             List<MediaType> types = new ArrayList<>();
             types.add(MediaType.TEXT_PLAIN);
