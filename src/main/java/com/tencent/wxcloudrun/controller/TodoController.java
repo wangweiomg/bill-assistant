@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +49,17 @@ public class TodoController {
         log.info("<--/api/todo/list get request! openId-->{}", openId);
 
         Optional<User> userOptional = userService.getByOpenId(openId);
-        return userOptional.map(user -> ApiResponse.ok(todoService.listByUserId(user.getId()))).orElseGet(ApiResponse::ok);
+
+
+
+        return userOptional.map(user -> {
+            List<Todo> todos = todoService.listByUserId(user.getId());
+
+            // 这里是把已经完成的todos 过滤掉20天以前的，减少太多历史
+            List<Todo> res = todos.stream().filter(todo -> todo.getCompleteDate() == null || todo.getCompleteDate().toLocalDate().isAfter(LocalDate.now().plusDays(-20L))).collect(Collectors.toList());
+
+            return ApiResponse.ok(res);
+        }).orElseGet(ApiResponse::ok);
 
 
     }
