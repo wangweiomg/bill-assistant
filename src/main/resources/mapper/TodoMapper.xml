@@ -47,7 +47,9 @@
         FROM t_todo
         WHERE user_id = #{userId}
         AND delete_flag = 0
-        ORDER BY deadline ASC
+        ORDER BY
+         case when complete_date is null then deadline end asc,
+         case when complete_date is not null then complete_date end desc
     </select>
 
     <insert id="save" parameterType="com.tencent.wxcloudrun.model.Todo">
